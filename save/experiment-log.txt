@@ -1,57 +1,95 @@
 pre-training...
-epoch:	0	nll:	10.1716
-epoch:	5	nll:	9.42939
-epoch:	10	nll:	9.2388
-epoch:	15	nll:	9.11899
-epoch:	20	nll:	9.13099
-epoch:	25	nll:	9.14474
-epoch:	30	nll:	9.12539
-epoch:	35	nll:	9.13982
-epoch:	40	nll:	9.135
-epoch:	45	nll:	9.13081
-epoch:	50	nll:	9.10678
-epoch:	55	nll:	9.10694
-epoch:	60	nll:	9.10349
-epoch:	65	nll:	9.10403
-epoch:	70	nll:	9.07613
-epoch:	75	nll:	9.091
-epoch:	80	nll:	9.08909
-epoch:	85	nll:	9.0807
-epoch:	90	nll:	9.08434
-epoch:	95	nll:	9.08936
-epoch:	100	nll:	9.07443
-epoch:	105	nll:	9.08305
-epoch:	110	nll:	9.06973
-epoch:	115	nll:	9.07058
+epoch:	0	nll:	10.1725
+epoch:	5	nll:	9.46808
+epoch:	10	nll:	9.30682
+epoch:	15	nll:	9.22365
+epoch:	20	nll:	9.16194
+epoch:	25	nll:	9.14397
+epoch:	30	nll:	9.13897
+epoch:	35	nll:	9.13233
+epoch:	40	nll:	9.12733
+epoch:	45	nll:	9.13226
+epoch:	50	nll:	9.12013
+epoch:	55	nll:	9.11881
+epoch:	60	nll:	9.1293
+epoch:	65	nll:	9.12908
+epoch:	70	nll:	9.11624
+epoch:	75	nll:	9.13498
+epoch:	80	nll:	9.1198
+epoch:	85	nll:	9.13021
+epoch:	90	nll:	9.10864
+epoch:	95	nll:	9.10851
+epoch:	100	nll:	9.12075
+epoch:	105	nll:	9.11608
+epoch:	110	nll:	9.13067
+epoch:	115	nll:	9.10667
+0. avg_d_loss: 3.5715
+1. avg_d_loss: 2.2374
+2. avg_d_loss: 1.5473
+3. avg_d_loss: 1.0932
+4. avg_d_loss: 0.7819
+5. avg_d_loss: 0.5892
+6. avg_d_loss: 0.4151
+7. avg_d_loss: 0.2828
+8. avg_d_loss: 0.2098
+9. avg_d_loss: 0.1521
+10. avg_d_loss: 0.1143
+11. avg_d_loss: 0.0905
+12. avg_d_loss: 0.0737
+13. avg_d_loss: 0.0598
+14. avg_d_loss: 0.0488
+15. avg_d_loss: 0.0457
+16. avg_d_loss: 0.0375
+17. avg_d_loss: 0.0332
+18. avg_d_loss: 0.0329
+19. avg_d_loss: 0.0273
+20. avg_d_loss: 0.0244
+21. avg_d_loss: 0.0241
+22. avg_d_loss: 0.0210
+23. avg_d_loss: 0.0195
+24. avg_d_loss: 0.0175
+25. avg_d_loss: 0.0170
+26. avg_d_loss: 0.0157
+27. avg_d_loss: 0.0141
+28. avg_d_loss: 0.0154
+29. avg_d_loss: 0.0137
+30. avg_d_loss: 0.0121
+31. avg_d_loss: 0.0135
+32. avg_d_loss: 0.0116
+33. avg_d_loss: 0.0107
+34. avg_d_loss: 0.0111
+35. avg_d_loss: 0.0096
+36. avg_d_loss: 0.0090
+37. avg_d_loss: 0.0098
+38. avg_d_loss: 0.0094
+39. avg_d_loss: 0.0094
+40. avg_d_loss: 0.0081
+41. avg_d_loss: 0.0087
+42. avg_d_loss: 0.0081
+43. avg_d_loss: 0.0078
+44. avg_d_loss: 0.0087
+45. avg_d_loss: 0.0070
+46. avg_d_loss: 0.0067
+47. avg_d_loss: 0.0072
+48. avg_d_loss: 0.0067
+49. avg_d_loss: 0.0065
 adversarial training...
-epoch:	0	nll:	9.08457
-epoch:	5	nll:	9.04511
-epoch:	10	nll:	9.03079
-epoch:	15	nll:	8.99239
-epoch:	20	nll:	8.96401
-epoch:	25	nll:	8.93864
-epoch:	30	nll:	8.91642
-epoch:	35	nll:	8.87761
-epoch:	40	nll:	8.88582
-epoch:	45	nll:	8.8592
-epoch:	50	nll:	8.83388
-epoch:	55	nll:	8.81342
-epoch:	60	nll:	8.80247
-epoch:	65	nll:	8.77778
-epoch:	70	nll:	8.7567
-epoch:	75	nll:	8.73002
-epoch:	80	nll:	8.72488
-epoch:	85	nll:	8.72233
-epoch:	90	nll:	8.71473
-epoch:	95	nll:	8.71163
-epoch:	100	nll:	8.70113
-epoch:	105	nll:	8.69879
-epoch:	110	nll:	8.69208
-epoch:	115	nll:	8.69291
-epoch:	120	nll:	8.68371
-epoch:	125	nll:	8.689
-epoch:	130	nll:	8.68989
-epoch:	135	nll:	8.68269
-epoch:	140	nll:	8.68647
-epoch:	145	nll:	8.68066
-epoch:	150	nll:	8.6832
+epoch:	0	nll:	9.11552avg_rewards0.00183376
+epoch:	5	nll:	9.05123avg_rewards0.00296179
+epoch:	10	nll:	8.93526avg_rewards0.00339398
+epoch:	15	nll:	8.8301avg_rewards0.00755438
+epoch:	20	nll:	8.67544avg_rewards0.0035195
+epoch:	25	nll:	8.50543avg_rewards0.00759568
+epoch:	30	nll:	8.18471avg_rewards0.00916202
+epoch:	35	nll:	7.64075avg_rewards0.026703
+epoch:	40	nll:	6.80329avg_rewards0.0697064
+epoch:	45	nll:	5.39042avg_rewards0.106293
+epoch:	50	nll:	3.98023avg_rewards0.366814
+epoch:	55	nll:	3.20946avg_rewards0.475204
+epoch:	60	nll:	3.12346avg_rewards0.620573
+epoch:	65	nll:	3.33435avg_rewards0.769683
+epoch:	70	nll:	3.40194avg_rewards0.791359
+epoch:	75	nll:	3.45383avg_rewards0.815706
+epoch:	80	nll:	3.51697avg_rewards0.795468
+epoch:	85	nll:	3.58227avg_rewards0.815707
+epoch:	90	nll:	3.67279avg_rewards0.816456

@@ -6,7 +6,10 @@ from generator import Generator
 from discriminator import Discriminator
 from rollout import ROLLOUT
 from target_lstm import TARGET_LSTM
-import cPickle
+#import cPickle
+import pickle as cPickle
+
+xrange = range
 
 #########################################################################################
 #  Generator  Hyper-parameters
@@ -89,7 +92,8 @@ def main():
     dis_data_loader = Dis_dataloader(BATCH_SIZE)
 
     generator = Generator(vocab_size, BATCH_SIZE, EMB_DIM, HIDDEN_DIM, SEQ_LENGTH, START_TOKEN)
-    target_params = cPickle.load(open('save/target_params.pkl'))
+    ffile = open('save/target_params.pkl', 'rb')
+    target_params = cPickle.load(ffile, encoding='latin1'); ffile.close()
     target_lstm = TARGET_LSTM(vocab_size, BATCH_SIZE, EMB_DIM, HIDDEN_DIM, SEQ_LENGTH, START_TOKEN, target_params) # The oracle model
 
     discriminator = Discriminator(sequence_length=20, num_classes=2, vocab_size=vocab_size, embedding_size=dis_embedding_dim, 
@@ -106,7 +110,7 @@ def main():
 
     log = open('save/experiment-log.txt', 'w')
     #  pre-train generator
-    print 'Start pre-training...'
+    print('Start pre-training...')
     log.write('pre-training...\n')
     for epoch in xrange(PRE_EPOCH_NUM):
         loss = pre_train_epoch(sess, generator, gen_data_loader)
@@ -114,36 +118,43 @@ def main():
             generate_samples(sess, generator, BATCH_SIZE, generated_num, eval_file)
             likelihood_data_loader.create_batches(eval_file)
             test_loss = target_loss(sess, target_lstm, likelihood_data_loader)
-            print 'pre-train epoch ', epoch, 'test_loss ', test_loss
+            print('pre-train epoch ', epoch, 'test_loss ', test_loss)
             buffer = 'epoch:\t'+ str(epoch) + '\tnll:\t' + str(test_loss) + '\n'
             log.write(buffer)
 
-    print 'Start pre-training discriminator...'
+    print('Start pre-training discriminator...')
     # Train 3 epoch on the generated data and do this for 50 times
-    for _ in range(50):
+    for d_it in range(50):
         generate_samples(sess, generator, BATCH_SIZE, generated_num, negative_file)
         dis_data_loader.load_train_data(positive_file, negative_file)
+        avg_d_loss = []
         for _ in range(3):
             dis_data_loader.reset_pointer()
             for it in xrange(dis_data_loader.num_batch):
                 x_batch, y_batch = dis_data_loader.next_batch()
+                targets = [discriminator.train_op, discriminator.loss]
                 feed = {
                     discriminator.input_x: x_batch,
                     discriminator.input_y: y_batch,
                     discriminator.dropout_keep_prob: dis_dropout_keep_prob
                 }
-                _ = sess.run(discriminator.train_op, feed)
+                _, d_loss = sess.run(targets, feed)
+                avg_d_loss += [d_loss]
+        buffer = '{}. avg_d_loss: {:.4f}\n'.format(d_it, np.mean(avg_d_loss))
+        print('{}. avg_d_loss: {:.4f}'.format(d_it, np.mean(avg_d_loss)))
+        log.write(buffer)
 
-    rollout = ROLLOUT(generator, 0.8)
+    rollout = ROLLOUT(generator, 0.2) # 0.8
 
-    print '#########################################################################'
-    print 'Start Adversarial Training...'
+    print( '#########################################################################')
+    print('Start Adversarial Training...')
     log.write('adversarial training...\n')
     for total_batch in range(TOTAL_BATCH):
         # Train the generator for one step
         for it in range(1):
             samples = generator.generate(sess)
             rewards = rollout.get_reward(sess, samples, 16, discriminator)
+            #rewards = np.random.rand(64, 20)
             feed = {generator.x: samples, generator.rewards: rewards}
             _ = sess.run(generator.g_updates, feed_dict=feed)
 
@@ -152,29 +163,36 @@ def main():
             generate_samples(sess, generator, BATCH_SIZE, generated_num, eval_file)
             likelihood_data_loader.create_batches(eval_file)
             test_loss = target_loss(sess, target_lstm, likelihood_data_loader)
-            buffer = 'epoch:\t' + str(total_batch) + '\tnll:\t' + str(test_loss) + '\n'
-            print 'total_batch: ', total_batch, 'test_loss: ', test_loss
+            avg_rewards = np.mean(rewards)
+            buffer = 'epoch:\t' + str(total_batch) + '\tnll:\t' + str(test_loss) + 'avg_rewards' + str(avg_rewards) + '\n'
+            print('total_batch: ', total_batch, 'test_loss: ', test_loss, 'avg_rewards: ', avg_rewards)
             log.write(buffer)
 
         # Update roll-out parameters
         rollout.update_params()
 
         # Train the discriminator
-        for _ in range(5):
+        avg_d_loss = []
+        for d_it in range(0):#(5):
             generate_samples(sess, generator, BATCH_SIZE, generated_num, negative_file)
             dis_data_loader.load_train_data(positive_file, negative_file)
-
+            
             for _ in range(3):
                 dis_data_loader.reset_pointer()
                 for it in xrange(dis_data_loader.num_batch):
                     x_batch, y_batch = dis_data_loader.next_batch()
+                    targets = [discriminator.train_op, discriminator.loss]
                     feed = {
                         discriminator.input_x: x_batch,
                         discriminator.input_y: y_batch,
                         discriminator.dropout_keep_prob: dis_dropout_keep_prob
                     }
-                    _ = sess.run(discriminator.train_op, feed)
-
+                    _, d_loss = sess.run(targets, feed)
+                    avg_d_loss += [d_loss]
+                    
+        #buffer = '{}. avg_d_loss: {:.4f}\n'.format(d_it, np.mean(avg_d_loss))
+        #print('{}. avg_d_loss: {:.4f}'.format(d_it, np.mean(avg_d_loss)))
+        #log.write(buffer)
     log.close()
 
 
